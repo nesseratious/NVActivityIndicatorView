@@ -30,7 +30,7 @@ import UIKit
 import NVActivityIndicatorView
 
 /// Class packages information used to display UI blocker.
-@available(*, deprecated, message: "")
+@MainActor
 public final class ActivityData {
     /// Size of activity indicator view.
     let size: CGSize
@@ -108,11 +108,13 @@ public final class ActivityData {
     }
 }
 
+@MainActor
 private protocol NVActivityIndicatorPresenterState {
     func startAnimating(presenter: NVActivityIndicatorPresenter, _ fadeInAnimation: FadeInAnimation?)
     func stopAnimating(presenter: NVActivityIndicatorPresenter, _ fadeOutAnimation: FadeOutAnimation?)
 }
 
+@MainActor
 private struct NVActivityIndicatorPresenterStateWaitingToStart: NVActivityIndicatorPresenterState {
     func startAnimating(presenter: NVActivityIndicatorPresenter, _ fadeInAnimation: FadeInAnimation?) {
         guard let activityData = presenter.data else { return }
@@ -128,6 +130,7 @@ private struct NVActivityIndicatorPresenterStateWaitingToStart: NVActivityIndica
     }
 }
 
+@MainActor
 private struct NVActivityIndicatorPresenterStateAnimating: NVActivityIndicatorPresenterState {
     func startAnimating(presenter: NVActivityIndicatorPresenter, _ fadeInAnimation: FadeInAnimation?) {
         // Do nothing
@@ -145,6 +148,7 @@ private struct NVActivityIndicatorPresenterStateAnimating: NVActivityIndicatorPr
     }
 }
 
+@MainActor
 private struct NVActivityIndicatorPresenterStateWaitingToStop: NVActivityIndicatorPresenterState {
     func startAnimating(presenter: NVActivityIndicatorPresenter, _ fadeInAnimation: FadeInAnimation?) {
         presenter.stopAnimating(nil)
@@ -159,6 +163,7 @@ private struct NVActivityIndicatorPresenterStateWaitingToStop: NVActivityIndicat
     }
 }
 
+@MainActor
 private struct NVActivityIndicatorPresenterStateStopped: NVActivityIndicatorPresenterState {
     func startAnimating(presenter: NVActivityIndicatorPresenter, _ fadeInAnimation: FadeInAnimation?) {
         guard let activityData = presenter.data else { return }
@@ -178,7 +183,7 @@ private struct NVActivityIndicatorPresenterStateStopped: NVActivityIndicatorPres
 }
 
 /// Presenter that displays NVActivityIndicatorView as UI blocker.
-@available(*, deprecated, message: "")
+@MainActor
 public final class NVActivityIndicatorPresenter {
     fileprivate enum State: NVActivityIndicatorPresenterState {
         case waitingToStart
@@ -336,4 +341,4 @@ public final class NVActivityIndicatorPresenter {
         }
     }
 }
-#endif
+#endif // canImport(UIKit)
