@@ -1,4 +1,4 @@
-// swift-tools-version:5.10
+// swift-tools-version: 6.2
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -6,7 +6,9 @@ import PackageDescription
 let package = Package(
     name: "NVActivityIndicatorView",
     platforms: [
-        .iOS(.v16), .macCatalyst(.v16), .tvOS(.v16)
+        .iOS(.v15),
+        .macCatalyst(.v15),
+        .tvOS(.v15)
     ],
     products: [
         .library(name: "NVActivityIndicatorView", targets: ["NVActivityIndicatorView"]),
